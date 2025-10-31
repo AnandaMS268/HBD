@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Memory Book</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Montserrat:wght@300;400&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ivory: #f9f5f0;
+            --paper: #f0e6d6;
+            --gold: #b89b72;
+            --rose: #d4a5a5;
+            --dark: #3a3a3a;
+            --light-gold: #e8d8c0;
+            --page-width: 450px;
+            --cover-color: #8b6b4a;
+        }
+        
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background-color: #e0d5c0;
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+        
+        .book-container {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            perspective: 2000px;
+        }
+        
+        .memory-book {
+            display: flex;
+            position: relative;
+            width: calc(var(--page-width) * 2 + 40px);
+            height: 700px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            transition: transform 1s ease-in-out;
+        }
+        
+        .cover {
+            position: absolute;
+            width: calc(var(--page-width) + 20px);
+            height: 100%;
+            background: linear-gradient(to right, #7a5c3c, var(--cover-color), #7a5c3c);
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #f0e6d6;
+            z-index: 10;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+        }
+        
+        .front-cover {
+            left: 0;
+            border-radius: 5px 0 0 5px;
+            transform-origin: right center;
+            transition: transform 1.5s ease-in-out;
+            z-index: 20;
+        }
+        
+        .back-cover {
+            right: 0;
+            border-radius: 0 5px 5px 0;
+            transform-origin: left center;
+            transition: transform 1.5s ease-in-out;
+            z-index: 5;
+        }
+        
+        .cover-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .cover-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .cover-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid var(--light-gold);
+            object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 40px;
+        }
+        
+        .cover-spine {
+            position: absolute;
+            left: calc(50% - 10px);
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(to right, #5c4329, #6b5237, #5c4329);
+            transform: rotateY(90deg);
+            transform-origin: left center;
+            z-index: 15;
+            box-shadow: inset -5px 0 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .pages-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-set {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform 1s ease-in-out;
+        }
+        
+        .page-left {
+            width: var(--page-width);
+            height: 100%;
+            background-color: var(--paper);
+            padding: 40px;
+            box-sizing: border-box;
+            border-right: 1px solid rgba(182, 155, 114, 0.3);
+            border-radius: 5px 0 0 5px;
+            overflow-y: auto;
+        }
+        
+        .page-right {
+            width: var(--page-width);
+            height: 100%;
+            background-color: var(--paper);
+            padding: 40px;
+            box-sizing: border-box;
+            border-left: 1px solid rgba(182, 155, 114, 0.3);
+            border-radius: 0 5px 5px 0;
+            overflow-y: auto;
+        }
+        
+        .spine {
+            width: 20px;
+            background: linear-gradient(to right, #a08662, #b89b72, #a08662);
+            box-shadow: inset -5px 0 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin: 20px 0 15px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--light-gold);
+            padding-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            color: var(--rose);
+            margin-top: 0;
+            font-weight: 400;
+        }
+        
+        .message {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        
+        .photo-collage {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 30px 0;
+        }
+        
+        .photo-item {
+            position: relative;
+            overflow: hidden;
+            height: 120px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            filter: sepia(15%) brightness(95%);
+        }
+        
+        .photo-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            filter: sepia(0%) brightness(100%);
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            margin: 30px auto;
+            width: 80%;
+        }
+        
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            text-align: right;
+            margin-top: 30px;
+            color: var(--rose);
+        }
+        
+        .page-controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+        
+        .page-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .page-btn:hover {
+            background: var(--rose);
+            transform: scale(1.1);
+        }
+        
+        .open-book-btn {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 50;
+        }
+        
+        .open-book-btn:hover {
+            background: var(--rose);
+            transform: translateX(-50%) scale(1.05);
+        }
+        
+        .secret-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--rose);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3);
+            transition: all 0.3s;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .secret-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(216, 27, 96, 0.4);
+        }
+        
+        .secret-gift {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .secret-content {
+            max-width: 800px;
+            text-align: center;
+            color: white;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .secret-photos {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .secret-photo {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border: 2px solid white;
+            transition: all 0.3s;
+            opacity: 0;
+            transform: scale(0.5);
+        }
+        
+        .love-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            margin: 20px 0;
+            opacity: 0;
+        }
+        
+        .close-secret {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .music-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px 15px;
+            border-radius: 30px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .music-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--dark);
+            transition: all 0.3s;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .music-btn:hover {
+            background: var(--rose);
+            color: white;
+        }
+        
+        .volume-control {
+            width: 80px;
+            -webkit-appearance: none;
+            height: 4px;
+            background: var(--light-gold);
+            border-radius: 2px;
+            outline: none;
+        }
+        
+        .volume-control::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--rose);
+            cursor: pointer;
+        }
+
+        .upload-controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+        }
+
+        .upload-section {
+            margin-bottom: 15px;
+        }
+
+        .upload-section h3 {
+            margin-top: 0;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+
+        .upload-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .upload-btn:hover {
+            background: var(--rose);
+        }
+
+        .file-info {
+            font-size: 0.8rem;
+            margin-top: 5px;
+            color: var(--dark);
+        }
+
+        .clear-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Cormorant Garamond', serif;
+            z-index: 100;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .clear-btn:hover {
+            background: #ff5252;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @media (max-width: 1000px) {
+            :root {
+                --page-width: 400px;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            :root {
+                --page-width: 350px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .cover-title {
+                font-size: 2.8rem;
+            }
+            
+            .cover-subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .cover-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+        
+        @media (max-width: 800px) {
+            :root {
+                --page-width: 300px;
+            }
+            
+            .page-left, .page-right {
+                padding: 30px;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            :root {
+                --page-width: 100%;
+            }
+            
+            .memory-book {
+                width: 100%;
+                height: auto;
+                flex-direction: column;
+            }
+            
+            .pages-container {
+                flex-direction: column;
+            }
+            
+            .page-set {
+                width: 100%;
+                flex-direction: column;
+            }
+            
+            .page-left, .page-right {
+                width: 100%;
+                border-radius: 5px !important;
+                border: none !important;
+                margin-bottom: 20px;
+                display: none;
+            }
+            
+            .page-left.active, .page-right.active {
+                display: block;
+            }
+            
+            .spine {
+                display: none;
+            }
+            
+            .page-controls {
+                bottom: 100px;
+            }
+            
+            .open-book-btn {
+                bottom: 160px;
+            }
+            
+            .cover {
+                width: 100%;
+                height: auto;
+                padding: 40px 20px;
+                position: relative;
+            }
+            
+            .front-cover, .back-cover {
+                position: relative;
+                border-radius: 5px;
+                margin-bottom: 20px;
+            }
+            
+            .cover-spine {
+                display: none;
+            }
+            
+            .music-controls {
+                top: 10px;
+                right: 10px;
+                padding: 5px 10px;
+            }
+            
+            .volume-control {
+                width: 60px;
+            }
+
+            .upload-controls {
+                top: 10px;
+                left: 10px;
+                max-width: calc(100% - 20px);
+            }
+
+            .clear-btn {
+                bottom: 160px;
+                right: 10px;
+            }
+
+            .secret-btn {
+                bottom: 100px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-controls">
+        <div class="upload-section">
+            <h3>Upload Cover Photos</h3>
+            <div style="margin-bottom: 10px;">
+                <label style="display: block; margin-bottom: 5px;">Front Cover:</label>
+                <input type="file" id="frontCoverUpload" accept="image/*" style="display: none;">
+                <button class="upload-btn" onclick="document.getElementById('frontCoverUpload').click()">Choose Front Cover</button>
+                <div class="file-info" id="frontCoverInfo">No file selected</div>
+            </div>
+            <div>
+                <label style="display: block; margin-bottom: 5px;">Back Cover:</label>
+                <input type="file" id="backCoverUpload" accept="image/*" style="display: none;">
+                <button class="upload-btn" onclick="document.getElementById('backCoverUpload').click()">Choose Back Cover</button>
+                <div class="file-info" id="backCoverInfo">No file selected</div>
+            </div>
+        </div>
+        
+        <div class="upload-section">
+            <h3>Upload Memory Photos</h3>
+            <input type="file" id="memoryPhotosUpload" accept="image/*" multiple style="display: none;">
+            <button class="upload-btn" onclick="document.getElementById('memoryPhotosUpload').click()">Choose Memory Photos</button>
+            <div class="file-info" id="memoryPhotosInfo">No files selected</div>
+        </div>
+        
+        <div class="upload-section">
+            <h3>Upload Background Music</h3>
+            <input type="file" id="musicUpload" accept="audio/*" style="display: none;">
+            <button class="upload-btn" onclick="document.getElementById('musicUpload').click()">Choose Music</button>
+            <div class="file-info" id="musicInfo">No file selected</div>
+        </div>
+    </div>
+    
+    <div class="music-controls">
+        <button class="music-btn" id="playBtn">▶️</button>
+        <button class="music-btn" id="pauseBtn">⏸️</button>
+        <input type="range" min="0" max="1" step="0.01" value="0.5" class="volume-control" id="volumeControl">
+    </div>
+    
+    <div class="book-container">
+        <div class="memory-book" id="memoryBook">
+            <div class="cover front-cover" id="frontCover">
+                <div class="cover-title">Our Love Story</div>
+                <div class="cover-subtitle">A Journey Through Time</div>
+                <img src="" alt="Front Cover Photo" class="cover-image" id="coverImage">
+                <div class="cover-subtitle">Happy Birthday My Love</div>
+            </div>
+            
+            <div class="cover-spine"></div>
+            
+            <div class="pages-container" id="pagesContainer">
+                <div class="page-set" id="spread1">
+                    <div class="page-left active">
+                        <div class="header">
+                            <h1>Our Journey</h1>
+                            <p class="subtitle">A collection of cherished moments</p>
+                        </div>
+                        
+                        <div class="message">
+                            <p>My Dearest,</p>
+                            <p>As I put together these pages, I'm reminded of how our story began - with laughter, with curiosity, with that inexplicable connection that drew us together.</p>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <h2>The Beginning</h2>
+                        
+                        <div class="photo-collage" id="beginningCollage">
+                        </div>
+                    </div>
+                    
+                    <div class="spine"></div>
+                    
+                    <div class="page-right active">
+                        <div class="photo-collage" id="earlyDaysCollage">
+                        </div>
+                        
+                        <div class="message">
+                            <p>I remember how nervous I was when we first met, how every word felt important, every glance meaningful. Little did I know those tentative first steps would lead us here.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="page-set" id="spread2">
+                    <div class="page-left">
+                        <h2>Shared Adventures</h2>
+                        
+                        <div class="photo-collage" id="adventuresCollage">
+                        </div>
+                        
+                        <div class="message">
+                            <p>Every place we've visited holds special meaning because we experienced it together. The laughter during wrong turns, the quiet moments watching sunsets, the shared wonder at new discoveries.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="spine"></div>
+                    
+                    <div class="page-right">
+                        <h2>Simple Joys</h2>
+                        
+                        <div class="photo-collage" id="joysCollage">
+                        </div>
+                        
+                        <div class="message">
+                            <p>It's not just the big adventures that I cherish, but also the quiet moments in between - the morning coffees, the shared meals, the comfortable silences.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="page-set" id="spread3">
+                    <div class="page-left">
+                        <div class="header">
+                            <h1>My Promise</h1>
+                            <p class="subtitle">To you, on your special day</p>
+                        </div>
+                        
+                        <div class="message">
+                            <p>As you celebrate another year of life, I want you to know how deeply grateful I am to share this journey with you.</p>
+                            
+                            <p>You've taught me the meaning of patience, the joy of companionship, and the beauty of growing alongside someone.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="spine"></div>
+                    
+                    <div class="page-right">
+                        <div class="message">
+                            <p>On your birthday, I promise:</p>
+                            
+                            <ul style="list-style-type: none; padding-left: 20px;">
+                                <li>• To cherish our memories while making space for new ones</li>
+                                <li>• To be your safe harbor in stormy weather</li>
+                                <li>• To celebrate your joys as if they were my own</li>
+                                <li>• To grow with you, always</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="photo-collage" id="promiseCollage">
+                        </div>
+                        
+                        <div class="signature">
+                            With all my heart,<br>
+                            Andi
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cover back-cover" id="backCover">
+                <div class="cover-title">Happy Birthday</div>
+                <div class="cover-subtitle">To the one who makes my life beautiful</div>
+                <img src="" alt="Back Cover Photo" class="cover-image" id="backCoverImage">
+                <div class="cover-subtitle">Forever Yours</div>
+            </div>
+        </div>
+    </div>
+    
+    <button class="open-book-btn" id="openBookBtn">Open Our Book</button>
+    
+    <div class="page-controls" id="pageControls" style="display: none;">
+        <button class="page-btn" id="prevBtn">←</button>
+        <button class="page-btn" id="nextBtn">→</button>
+    </div>
+    
+    <button class="secret-btn" id="secretBtn">❤️</button>
+    <button class="clear-btn" id="clearBtn">Hapus Semua Data</button>
+    
+    <div class="secret-gift" id="secretGift">
+        <button class="close-secret" id="closeSecret">✕</button>
+        <div class="secret-content">
+            <h1 style="color: #ff6b88; font-family: 'Dancing Script', cursive; font-size: 3rem;">Just For You</h1>
+            <div class="secret-photos" id="secretPhotos">
+            </div>
+            <div class="love-message" id="loveMessage"></div>
+        </div>
+    </div>
+    
+    <audio id="backgroundMusic" loop></audio>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const book = document.getElementById('memoryBook');
+            const frontCover = document.getElementById('frontCover');
+            const backCover = document.getElementById('backCover');
+            const pagesContainer = document.getElementById('pagesContainer');
+            const spreads = document.querySelectorAll('.page-set');
+            const openBookBtn = document.getElementById('openBookBtn');
+            const pageControls = document.getElementById('pageControls');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const secretBtn = document.getElementById('secretBtn');
+            const secretGift = document.getElementById('secretGift');
+            const closeSecret = document.getElementById('closeSecret');
+            const secretPhotos = document.getElementById('secretPhotos');
+            const loveMessage = document.getElementById('loveMessage');
+            const coverImage = document.getElementById('coverImage');
+            const backCoverImage = document.getElementById('backCoverImage');
+            const clearBtn = document.getElementById('clearBtn');
+            
+            const beginningCollage = document.getElementById('beginningCollage');
+            const earlyDaysCollage = document.getElementById('earlyDaysCollage');
+            const adventuresCollage = document.getElementById('adventuresCollage');
+            const joysCollage = document.getElementById('joysCollage');
+            const promiseCollage = document.getElementById('promiseCollage');
+            
+            const playBtn = document.getElementById('playBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const volumeControl = document.getElementById('volumeControl');
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            
+            const frontCoverUpload = document.getElementById('frontCoverUpload');
+            const backCoverUpload = document.getElementById('backCoverUpload');
+            const memoryPhotosUpload = document.getElementById('memoryPhotosUpload');
+            const musicUpload = document.getElementById('musicUpload');
+            const frontCoverInfo = document.getElementById('frontCoverInfo');
+            const backCoverInfo = document.getElementById('backCoverInfo');
+            const memoryPhotosInfo = document.getElementById('memoryPhotosInfo');
+            const musicInfo = document.getElementById('musicInfo');
+            
+            let currentSpread = 0;
+            const totalSpreads = spreads.length - 1;
+            let isAnimating = false;
+            let autoTurnTimer;
+            let isBookOpen = false;
+            
+            function initBook() {
+                closeBook();
+                
+                updateBookPosition();
+                
+                setupMusicPlayer();
+                
+                setupFileUploads();
+                
+                setupClearButton();
+                
+                loadFromLocalStorage();
+            }
+            
+            function setupFileUploads() {
+                frontCoverUpload.addEventListener('change', async function(e) {
+                    if (e.target.files.length > 0) {
+                        const file = e.target.files[0];
+                        frontCoverInfo.textContent = file.name;
+                        
+                        await saveImageToLocalStorage('frontCoverPhoto', file);
+                        loadCoverImages();
+                    }
+                });
+                
+                backCoverUpload.addEventListener('change', async function(e) {
+                    if (e.target.files.length > 0) {
+                        const file = e.target.files[0];
+                        backCoverInfo.textContent = file.name;
+                        
+                        await saveImageToLocalStorage('backCoverPhoto', file);
+                        loadCoverImages();
+                    }
+                });
+                
+                memoryPhotosUpload.addEventListener('change', async function(e) {
+                    if (e.target.files.length > 0) {
+                        memoryPhotosInfo.textContent = `${e.target.files.length} files selected`;
+                        
+                        const musicData = localStorage.getItem('backgroundMusic');
+                        const frontCover = localStorage.getItem('frontCoverPhoto');
+                        const backCover = localStorage.getItem('backCoverPhoto');
+                        
+                        localStorage.removeItem('memoryPhotosCount');
+                        for (let i = 0; i < localStorage.length; i++) {
+                            const key = localStorage.key(i);
+                            if (key.startsWith('memoryPhoto_')) {
+                                localStorage.removeItem(key);
+                            }
+                        }
+                        
+                        if (musicData) localStorage.setItem('backgroundMusic', musicData);
+                        if (frontCover) localStorage.setItem('frontCoverPhoto', frontCover);
+                        if (backCover) localStorage.setItem('backCoverPhoto', backCover);
+                        
+                        for (let i = 0; i < e.target.files.length; i++) {
+                            await saveImageToLocalStorage(`memoryPhoto_${i}`, e.target.files[i]);
+                        }
+                        
+                        localStorage.setItem('memoryPhotosCount', e.target.files.length);
+                        loadAllMemoryPhotos();
+                    }
+                });
+
+                musicUpload.addEventListener('change', async function(e) {
+                    if (e.target.files.length > 0) {
+                        const file = e.target.files[0];
+                        musicInfo.textContent = file.name;
+                        
+                        const memoryPhotosCount = localStorage.getItem('memoryPhotosCount');
+                        const frontCover = localStorage.getItem('frontCoverPhoto');
+                        const backCover = localStorage.getItem('backCoverPhoto');
+                        
+                        localStorage.removeItem('backgroundMusic');
+                        
+                        await saveAudioToLocalStorage('backgroundMusic', file);
+                        
+                        if (memoryPhotosCount) localStorage.setItem('memoryPhotosCount', memoryPhotosCount);
+                        if (frontCover) localStorage.setItem('frontCoverPhoto', frontCover);
+                        if (backCover) localStorage.setItem('backCoverPhoto', backCover);
+                        
+                        loadBackgroundMusic();
+                    }
+                });
+            }
+            
+            function setupClearButton() {
+                clearBtn.addEventListener('click', function() {
+                    if(confirm('Apakah Anda yakin ingin menghapus semua data termasuk foto dan musik?')) {
+                        localStorage.clear();
+                        
+                        frontCoverInfo.textContent = 'No file selected';
+                        backCoverInfo.textContent = 'No file selected';
+                        memoryPhotosInfo.textContent = 'No files selected';
+                        musicInfo.textContent = 'No file selected';
+                        
+                        coverImage.src = '';
+                        backCoverImage.src = '';
+                        
+                        beginningCollage.innerHTML = '';
+                        earlyDaysCollage.innerHTML = '';
+                        adventuresCollage.innerHTML = '';
+                        joysCollage.innerHTML = '';
+                        promiseCollage.innerHTML = '';
+                        secretPhotos.innerHTML = '';
+                        
+                        backgroundMusic.src = '';
+                        backgroundMusic.pause();
+                        playBtn.style.display = 'block';
+                        pauseBtn.style.display = 'none';
+                        
+                        location.reload();
+                    }
+                });
+            }
+            
+            function saveImageToLocalStorage(key, file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        localStorage.setItem(key, e.target.result);
+                        resolve();
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            function saveAudioToLocalStorage(key, file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        localStorage.setItem(key, e.target.result);
+                        resolve();
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            }
+            
+            function loadCoverImages() {
+                const frontCoverPhoto = localStorage.getItem('frontCoverPhoto');
+                const backCoverPhoto = localStorage.getItem('backCoverPhoto');
+                
+                if (frontCoverPhoto) {
+                    coverImage.src = frontCoverPhoto;
+                    frontCoverInfo.textContent = 'Loaded from storage';
+                }
+                
+                if (backCoverPhoto) {
+                    backCoverImage.src = backCoverPhoto;
+                    backCoverInfo.textContent = 'Loaded from storage';
+                }
+            }
+            
+            function loadBackgroundMusic() {
+                const musicData = localStorage.getItem('backgroundMusic');
+                if (musicData) {
+                    try {
+                        backgroundMusic.src = musicData;
+                        musicInfo.textContent = 'Loaded from storage';
+                        backgroundMusic.play().catch(error => {
+                            console.log("Autoplay prevented:", error);
+                            playBtn.style.display = 'block';
+                            pauseBtn.style.display = 'none';
+                        });
+                    } catch (error) {
+                        console.error("Error loading music:", error);
+                        musicInfo.textContent = 'Error loading music';
+                    }
+                }
+            }
+            
+            function loadAllMemoryPhotos() {
+                beginningCollage.innerHTML = '';
+                earlyDaysCollage.innerHTML = '';
+                adventuresCollage.innerHTML = '';
+                joysCollage.innerHTML = '';
+                promiseCollage.innerHTML = '';
+                secretPhotos.innerHTML = '';
+                
+                const photoCount = localStorage.getItem('memoryPhotosCount') || 0;
+                const allPhotos = [];
+                
+                for (let i = 0; i < photoCount; i++) {
+                    const photoData = localStorage.getItem(`memoryPhoto_${i}`);
+                    if (photoData) {
+                        allPhotos.push(photoData);
+                    }
+                }
+                
+                if (photoCount > 0) {
+                    memoryPhotosInfo.textContent = `${photoCount} photos loaded from storage`;
+                }
+                
+                allPhotos.forEach((photoData, index) => {
+                    const img = document.createElement('img');
+                    img.src = photoData;
+                    
+                    const photoItem = document.createElement('div');
+                    photoItem.className = 'photo-item';
+                    photoItem.appendChild(img);
+                    
+                    const secretPhoto = document.createElement('img');
+                    secretPhoto.src = photoData;
+                    secretPhoto.className = 'secret-photo';
+                    secretPhotos.appendChild(secretPhoto);
+                    
+                    if (index < 2) {
+                        beginningCollage.appendChild(photoItem.cloneNode(true));
+                    } else if (index < 4) {
+                        earlyDaysCollage.appendChild(photoItem.cloneNode(true));
+                    } else if (index < 6) {
+                        adventuresCollage.appendChild(photoItem.cloneNode(true));
+                    } else if (index < 8) {
+                        joysCollage.appendChild(photoItem.cloneNode(true));
+                    } else {
+                        promiseCollage.appendChild(photoItem.cloneNode(true));
+                    }
+                });
+            }
+            
+            function loadFromLocalStorage() {
+                loadCoverImages();
+                loadBackgroundMusic();
+                loadAllMemoryPhotos();
+            }
+            
+            function setupMusicPlayer() {
+                backgroundMusic.volume = volumeControl.value;
+                
+                playBtn.addEventListener('click', function() {
+                    backgroundMusic.play();
+                    playBtn.style.display = 'none';
+                    pauseBtn.style.display = 'block';
+                });
+                
+                pauseBtn.addEventListener('click', function() {
+                    backgroundMusic.pause();
+                    pauseBtn.style.display = 'none';
+                    playBtn.style.display = 'block';
+                });
+                
+                volumeControl.addEventListener('input', function() {
+                    backgroundMusic.volume = this.value;
+                });
+                
+                pauseBtn.style.display = 'none';
+            }
+            
+            function openBook() {
+                if (isAnimating) return;
+                
+                isAnimating = true;
+                isBookOpen = true;
+                
+                openBookBtn.style.display = 'none';
+                pageControls.style.display = 'flex';
+                
+                frontCover.style.transform = 'rotateY(-160deg)';
+                
+                backCover.style.transform = 'rotateY(160deg)';
+                
+                pagesContainer.style.display = 'flex';
+                
+                updateBookPosition();
+                
+                startAutoTurn();
+                
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 1500);
+            }
+            
+            function closeBook() {
+                isBookOpen = false;
+                
+                openBookBtn.style.display = 'block';
+                pageControls.style.display = 'none';
+                
+                frontCover.style.transform = 'rotateY(0deg)';
+                
+                backCover.style.transform = 'rotateY(0deg)';
+                
+                spreads.forEach(spread => {
+                    spread.style.display = 'none';
+                });
+                
+                clearInterval(autoTurnTimer);
+            }
+            
+            function updateBookPosition() {
+                if (isAnimating) return;
+                
+                isAnimating = true;
+                
+                spreads.forEach(spread => {
+                    spread.style.display = 'none';
+                });
+                
+                spreads[currentSpread].style.display = 'flex';
+                
+                prevBtn.disabled = currentSpread === 0;
+                nextBtn.disabled = currentSpread === totalSpreads;
+                
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 1000);
+            }
+            
+            function nextSpread() {
+                if (currentSpread < totalSpreads) {
+                    currentSpread++;
+                    updateBookPosition();
+                }
+                resetAutoTurn();
+            }
+            
+            function prevSpread() {
+                if (currentSpread > 0) {
+                    currentSpread--;
+                    updateBookPosition();
+                }
+                resetAutoTurn();
+            }
+            
+            function startAutoTurn() {
+                autoTurnTimer = setInterval(() => {
+                    if (currentSpread < totalSpreads) {
+                        nextSpread();
+                    } else {
+                        currentSpread = 0;
+                        updateBookPosition();
+                    }
+                }, 40000);
+            }
+            
+            function resetAutoTurn() {
+                clearInterval(autoTurnTimer);
+                if (isBookOpen) {
+                    startAutoTurn();
+                }
+            }
+            
+            openBookBtn.addEventListener('click', openBook);
+            nextBtn.addEventListener('click', nextSpread);
+            prevBtn.addEventListener('click', prevSpread);
+            
+            document.addEventListener('keydown', function(e) {
+                if (!isBookOpen) return;
+                
+                if (e.key === 'ArrowRight') {
+                    nextSpread();
+                } else if (e.key === 'ArrowLeft') {
+                    prevSpread();
+                }
+            });
+            
+            const messages = [
+                "Every moment with you is a treasure",
+                "Your smile lights up my world",
+                "I fall for you more each day",
+                "My heart is yours forever",
+                "You're my favorite hello and hardest goodbye",
+                "Loving you is my favorite thing to do",
+                "You make my heart skip beats",
+                "Forever isn't long enough with you"
+            ];
+            
+            secretBtn.addEventListener('click', function() {
+                secretGift.style.display = 'flex';
+                
+                const photos = document.querySelectorAll('.secret-photo');
+                photos.forEach((photo, index) => {
+                    setTimeout(() => {
+                        photo.style.opacity = '1';
+                        photo.style.transform = 'scale(1)';
+                    }, index * 200);
+                });
+                
+                setTimeout(() => {
+                    loveMessage.textContent = messages[Math.floor(Math.random() * messages.length)];
+                    loveMessage.style.opacity = '1';
+                    loveMessage.style.animation = 'fadeIn 1s';
+                }, photos.length * 200 + 500);
+            });
+            
+            closeSecret.addEventListener('click', function() {
+                secretGift.style.display = 'none';
+                loveMessage.style.opacity = '0';
+                
+                document.querySelectorAll('.secret-photo').forEach(photo => {
+                    photo.style.opacity = '0';
+                    photo.style.transform = 'scale(0.5)';
+                });
+            });
+            
+            initBook();
+        });
+    </script>
+</body>
+</html>

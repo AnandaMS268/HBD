@@ -432,51 +432,6 @@
             cursor: pointer;
         }
 
-        .upload-controls {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            max-width: 300px;
-        }
-
-        .upload-section {
-            margin-bottom: 15px;
-        }
-
-        .upload-section h3 {
-            margin-top: 0;
-            font-family: 'Cormorant Garamond', serif;
-            color: var(--dark);
-            font-size: 1.2rem;
-        }
-
-        .upload-btn {
-            background: var(--gold);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-        }
-
-        .upload-btn:hover {
-            background: var(--rose);
-        }
-
-        .file-info {
-            font-size: 0.8rem;
-            margin-top: 5px;
-            color: var(--dark);
-        }
-
         .clear-btn {
             position: fixed;
             bottom: 100px;
@@ -615,12 +570,6 @@
                 width: 60px;
             }
 
-            .upload-controls {
-                top: 10px;
-                left: 10px;
-                max-width: calc(100% - 20px);
-            }
-
             .clear-btn {
                 bottom: 160px;
                 right: 10px;
@@ -634,38 +583,6 @@
     </style>
 </head>
 <body>
-    <div class="upload-controls">
-        <div class="upload-section">
-            <h3>Upload Cover Photos</h3>
-            <div style="margin-bottom: 10px;">
-                <label style="display: block; margin-bottom: 5px;">Front Cover:</label>
-                <input type="file" id="frontCoverUpload" accept="image/*" style="display: none;">
-                <button class="upload-btn" onclick="document.getElementById('frontCoverUpload').click()">Choose Front Cover</button>
-                <div class="file-info" id="frontCoverInfo">No file selected</div>
-            </div>
-            <div>
-                <label style="display: block; margin-bottom: 5px;">Back Cover:</label>
-                <input type="file" id="backCoverUpload" accept="image/*" style="display: none;">
-                <button class="upload-btn" onclick="document.getElementById('backCoverUpload').click()">Choose Back Cover</button>
-                <div class="file-info" id="backCoverInfo">No file selected</div>
-            </div>
-        </div>
-        
-        <div class="upload-section">
-            <h3>Upload Memory Photos</h3>
-            <input type="file" id="memoryPhotosUpload" accept="image/*" multiple style="display: none;">
-            <button class="upload-btn" onclick="document.getElementById('memoryPhotosUpload').click()">Choose Memory Photos</button>
-            <div class="file-info" id="memoryPhotosInfo">No files selected</div>
-        </div>
-        
-        <div class="upload-section">
-            <h3>Upload Background Music</h3>
-            <input type="file" id="musicUpload" accept="audio/*" style="display: none;">
-            <button class="upload-btn" onclick="document.getElementById('musicUpload').click()">Choose Music</button>
-            <div class="file-info" id="musicInfo">No file selected</div>
-        </div>
-    </div>
-    
     <div class="music-controls">
         <button class="music-btn" id="playBtn">▶️</button>
         <button class="music-btn" id="pauseBtn">⏸️</button>
@@ -677,7 +594,7 @@
             <div class="cover front-cover" id="frontCover">
                 <div class="cover-title">Our Love Story</div>
                 <div class="cover-subtitle">A Journey Through Time</div>
-                <img src="" alt="Front Cover Photo" class="cover-image" id="coverImage">
+                <img src="https://images.unsplash.com/photo-1516487106395-f3d5d8a5c1e3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Front Cover Photo" class="cover-image" id="coverImage">
                 <div class="cover-subtitle">Happy Birthday My Love</div>
             </div>
             
@@ -701,6 +618,12 @@
                         <h2>The Beginning</h2>
                         
                         <div class="photo-collage" id="beginningCollage">
+                            <div class="photo-item">
+                                <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Memory 1">
+                            </div>
+                            <div class="photo-item">
+                                <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Memory 2">
+                            </div>
                         </div>
                     </div>
                     
@@ -708,6 +631,12 @@
                     
                     <div class="page-right active">
                         <div class="photo-collage" id="earlyDaysCollage">
+                            <div class="photo-item">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Memory 3">
+                            </div>
+                            <div class="photo-item">
+                                <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Memory 4">
+                            </div>
                         </div>
                         
                         <div class="message">
@@ -721,6 +650,12 @@
                         <h2>Shared Adventures</h2>
                         
                         <div class="photo-collage" id="adventuresCollage">
+                            <div class="photo-item">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Memory 5">
+                            </div>
+                            <div class="photo-item">
+                                <img src="https://images.unsplash.com/photo-1506634572416-48cdfe530110?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Memory 6">
+                            </div>
                         </div>
                         
                         <div class="message">
@@ -734,6 +669,12 @@
                         <h2>Simple Joys</h2>
                         
                         <div class="photo-collage" id="joysCollage">
+                            <div class="photo-item">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Memory 7">
+                            </div>
+                            <div class="photo-item">
+                                <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Memory 8">
+                            </div>
                         </div>
                         
                         <div class="message">
@@ -773,6 +714,12 @@
                         <div class="divider"></div>
                         
                         <div class="photo-collage" id="promiseCollage">
+                            <div class="photo-item">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Memory 9">
+                            </div>
+                            <div class="photo-item">
+                                <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Memory 10">
+                            </div>
                         </div>
                         
                         <div class="signature">
@@ -786,7 +733,7 @@
             <div class="cover back-cover" id="backCover">
                 <div class="cover-title">Happy Birthday</div>
                 <div class="cover-subtitle">To the one who makes my life beautiful</div>
-                <img src="" alt="Back Cover Photo" class="cover-image" id="backCoverImage">
+                <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Back Cover Photo" class="cover-image" id="backCoverImage">
                 <div class="cover-subtitle">Forever Yours</div>
             </div>
         </div>
@@ -800,19 +747,28 @@
     </div>
     
     <button class="secret-btn" id="secretBtn">❤️</button>
-    <button class="clear-btn" id="clearBtn">Hapus Semua Data</button>
     
     <div class="secret-gift" id="secretGift">
         <button class="close-secret" id="closeSecret">✕</button>
         <div class="secret-content">
             <h1 style="color: #ff6b88; font-family: 'Dancing Script', cursive; font-size: 3rem;">Just For You</h1>
             <div class="secret-photos" id="secretPhotos">
+                <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Secret Photo 1" class="secret-photo">
+                <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Secret Photo 2" class="secret-photo">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Secret Photo 3" class="secret-photo">
+                <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Secret Photo 4" class="secret-photo">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Secret Photo 5" class="secret-photo">
+                <img src="https://images.unsplash.com/photo-1506634572416-48cdfe530110?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Secret Photo 6" class="secret-photo">
+                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Secret Photo 7" class="secret-photo">
+                <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Secret Photo 8" class="secret-photo">
             </div>
             <div class="love-message" id="loveMessage"></div>
         </div>
     </div>
     
-    <audio id="backgroundMusic" loop></audio>
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -830,29 +786,11 @@
             const closeSecret = document.getElementById('closeSecret');
             const secretPhotos = document.getElementById('secretPhotos');
             const loveMessage = document.getElementById('loveMessage');
-            const coverImage = document.getElementById('coverImage');
-            const backCoverImage = document.getElementById('backCoverImage');
-            const clearBtn = document.getElementById('clearBtn');
-            
-            const beginningCollage = document.getElementById('beginningCollage');
-            const earlyDaysCollage = document.getElementById('earlyDaysCollage');
-            const adventuresCollage = document.getElementById('adventuresCollage');
-            const joysCollage = document.getElementById('joysCollage');
-            const promiseCollage = document.getElementById('promiseCollage');
             
             const playBtn = document.getElementById('playBtn');
             const pauseBtn = document.getElementById('pauseBtn');
             const volumeControl = document.getElementById('volumeControl');
             const backgroundMusic = document.getElementById('backgroundMusic');
-            
-            const frontCoverUpload = document.getElementById('frontCoverUpload');
-            const backCoverUpload = document.getElementById('backCoverUpload');
-            const memoryPhotosUpload = document.getElementById('memoryPhotosUpload');
-            const musicUpload = document.getElementById('musicUpload');
-            const frontCoverInfo = document.getElementById('frontCoverInfo');
-            const backCoverInfo = document.getElementById('backCoverInfo');
-            const memoryPhotosInfo = document.getElementById('memoryPhotosInfo');
-            const musicInfo = document.getElementById('musicInfo');
             
             let currentSpread = 0;
             const totalSpreads = spreads.length - 1;
@@ -866,226 +804,6 @@
                 updateBookPosition();
                 
                 setupMusicPlayer();
-                
-                setupFileUploads();
-                
-                setupClearButton();
-                
-                loadFromLocalStorage();
-            }
-            
-            function setupFileUploads() {
-                frontCoverUpload.addEventListener('change', async function(e) {
-                    if (e.target.files.length > 0) {
-                        const file = e.target.files[0];
-                        frontCoverInfo.textContent = file.name;
-                        
-                        await saveImageToLocalStorage('frontCoverPhoto', file);
-                        loadCoverImages();
-                    }
-                });
-                
-                backCoverUpload.addEventListener('change', async function(e) {
-                    if (e.target.files.length > 0) {
-                        const file = e.target.files[0];
-                        backCoverInfo.textContent = file.name;
-                        
-                        await saveImageToLocalStorage('backCoverPhoto', file);
-                        loadCoverImages();
-                    }
-                });
-                
-                memoryPhotosUpload.addEventListener('change', async function(e) {
-                    if (e.target.files.length > 0) {
-                        memoryPhotosInfo.textContent = `${e.target.files.length} files selected`;
-                        
-                        const musicData = localStorage.getItem('backgroundMusic');
-                        const frontCover = localStorage.getItem('frontCoverPhoto');
-                        const backCover = localStorage.getItem('backCoverPhoto');
-                        
-                        localStorage.removeItem('memoryPhotosCount');
-                        for (let i = 0; i < localStorage.length; i++) {
-                            const key = localStorage.key(i);
-                            if (key.startsWith('memoryPhoto_')) {
-                                localStorage.removeItem(key);
-                            }
-                        }
-                        
-                        if (musicData) localStorage.setItem('backgroundMusic', musicData);
-                        if (frontCover) localStorage.setItem('frontCoverPhoto', frontCover);
-                        if (backCover) localStorage.setItem('backCoverPhoto', backCover);
-                        
-                        for (let i = 0; i < e.target.files.length; i++) {
-                            await saveImageToLocalStorage(`memoryPhoto_${i}`, e.target.files[i]);
-                        }
-                        
-                        localStorage.setItem('memoryPhotosCount', e.target.files.length);
-                        loadAllMemoryPhotos();
-                    }
-                });
-
-                musicUpload.addEventListener('change', async function(e) {
-                    if (e.target.files.length > 0) {
-                        const file = e.target.files[0];
-                        musicInfo.textContent = file.name;
-                        
-                        const memoryPhotosCount = localStorage.getItem('memoryPhotosCount');
-                        const frontCover = localStorage.getItem('frontCoverPhoto');
-                        const backCover = localStorage.getItem('backCoverPhoto');
-                        
-                        localStorage.removeItem('backgroundMusic');
-                        
-                        await saveAudioToLocalStorage('backgroundMusic', file);
-                        
-                        if (memoryPhotosCount) localStorage.setItem('memoryPhotosCount', memoryPhotosCount);
-                        if (frontCover) localStorage.setItem('frontCoverPhoto', frontCover);
-                        if (backCover) localStorage.setItem('backCoverPhoto', backCover);
-                        
-                        loadBackgroundMusic();
-                    }
-                });
-            }
-            
-            function setupClearButton() {
-                clearBtn.addEventListener('click', function() {
-                    if(confirm('Apakah Anda yakin ingin menghapus semua data termasuk foto dan musik?')) {
-                        localStorage.clear();
-                        
-                        frontCoverInfo.textContent = 'No file selected';
-                        backCoverInfo.textContent = 'No file selected';
-                        memoryPhotosInfo.textContent = 'No files selected';
-                        musicInfo.textContent = 'No file selected';
-                        
-                        coverImage.src = '';
-                        backCoverImage.src = '';
-                        
-                        beginningCollage.innerHTML = '';
-                        earlyDaysCollage.innerHTML = '';
-                        adventuresCollage.innerHTML = '';
-                        joysCollage.innerHTML = '';
-                        promiseCollage.innerHTML = '';
-                        secretPhotos.innerHTML = '';
-                        
-                        backgroundMusic.src = '';
-                        backgroundMusic.pause();
-                        playBtn.style.display = 'block';
-                        pauseBtn.style.display = 'none';
-                        
-                        location.reload();
-                    }
-                });
-            }
-            
-            function saveImageToLocalStorage(key, file) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        localStorage.setItem(key, e.target.result);
-                        resolve();
-                    };
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-            }
-
-            function saveAudioToLocalStorage(key, file) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        localStorage.setItem(key, e.target.result);
-                        resolve();
-                    };
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-            }
-            
-            function loadCoverImages() {
-                const frontCoverPhoto = localStorage.getItem('frontCoverPhoto');
-                const backCoverPhoto = localStorage.getItem('backCoverPhoto');
-                
-                if (frontCoverPhoto) {
-                    coverImage.src = frontCoverPhoto;
-                    frontCoverInfo.textContent = 'Loaded from storage';
-                }
-                
-                if (backCoverPhoto) {
-                    backCoverImage.src = backCoverPhoto;
-                    backCoverInfo.textContent = 'Loaded from storage';
-                }
-            }
-            
-            function loadBackgroundMusic() {
-                const musicData = localStorage.getItem('backgroundMusic');
-                if (musicData) {
-                    try {
-                        backgroundMusic.src = musicData;
-                        musicInfo.textContent = 'Loaded from storage';
-                        backgroundMusic.play().catch(error => {
-                            console.log("Autoplay prevented:", error);
-                            playBtn.style.display = 'block';
-                            pauseBtn.style.display = 'none';
-                        });
-                    } catch (error) {
-                        console.error("Error loading music:", error);
-                        musicInfo.textContent = 'Error loading music';
-                    }
-                }
-            }
-            
-            function loadAllMemoryPhotos() {
-                beginningCollage.innerHTML = '';
-                earlyDaysCollage.innerHTML = '';
-                adventuresCollage.innerHTML = '';
-                joysCollage.innerHTML = '';
-                promiseCollage.innerHTML = '';
-                secretPhotos.innerHTML = '';
-                
-                const photoCount = localStorage.getItem('memoryPhotosCount') || 0;
-                const allPhotos = [];
-                
-                for (let i = 0; i < photoCount; i++) {
-                    const photoData = localStorage.getItem(`memoryPhoto_${i}`);
-                    if (photoData) {
-                        allPhotos.push(photoData);
-                    }
-                }
-                
-                if (photoCount > 0) {
-                    memoryPhotosInfo.textContent = `${photoCount} photos loaded from storage`;
-                }
-                
-                allPhotos.forEach((photoData, index) => {
-                    const img = document.createElement('img');
-                    img.src = photoData;
-                    
-                    const photoItem = document.createElement('div');
-                    photoItem.className = 'photo-item';
-                    photoItem.appendChild(img);
-                    
-                    const secretPhoto = document.createElement('img');
-                    secretPhoto.src = photoData;
-                    secretPhoto.className = 'secret-photo';
-                    secretPhotos.appendChild(secretPhoto);
-                    
-                    if (index < 2) {
-                        beginningCollage.appendChild(photoItem.cloneNode(true));
-                    } else if (index < 4) {
-                        earlyDaysCollage.appendChild(photoItem.cloneNode(true));
-                    } else if (index < 6) {
-                        adventuresCollage.appendChild(photoItem.cloneNode(true));
-                    } else if (index < 8) {
-                        joysCollage.appendChild(photoItem.cloneNode(true));
-                    } else {
-                        promiseCollage.appendChild(photoItem.cloneNode(true));
-                    }
-                });
-            }
-            
-            function loadFromLocalStorage() {
-                loadCoverImages();
-                loadBackgroundMusic();
-                loadAllMemoryPhotos();
             }
             
             function setupMusicPlayer() {
@@ -1108,6 +826,15 @@
                 });
                 
                 pauseBtn.style.display = 'none';
+                
+                // Auto play music (with user interaction)
+                document.addEventListener('click', function() {
+                    if (backgroundMusic.paused) {
+                        backgroundMusic.play().catch(e => {
+                            console.log("Autoplay prevented, waiting for user interaction");
+                        });
+                    }
+                }, { once: true });
             }
             
             function openBook() {
